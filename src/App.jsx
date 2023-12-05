@@ -10,19 +10,43 @@ function App() {
   
   const stringSplit = () => {
     const stringSplit = inputData.split('\n')
-    console.log('stringSplit:', stringSplit)
     return stringSplit
   }
 
+  const arraySum = (array) => {
+    
+  }
+
   const getCalibrationValues = (stringArray) => {
+    let calibrationValues = []
     stringArray.forEach((element) => {
-      console.log(element)
-      
+      let number = ''
+      for( let i = 0; i < element.length; i++ ){
+        if( !isNaN(+element[i]) ){
+          number += element[i]
+          break
+        }
+      }
+      if (number !== ''){
+        const elementReversed = element.split('').reverse().join('')
+        for( let i = 0; i < elementReversed.length; i++ ){
+          if( !isNaN(+elementReversed[i]) ){
+            number += elementReversed[i]
+            break
+          }
+        }
+      }
+      console.log('number:', number)
+      if( number !== '' ) calibrationValues.push(number)
+      console.log('---')
     })
+    console.log('calibrationValues', calibrationValues)
+
+    calibrationValues.reduce()
   }
   
   const getCalibrationValueSum = (event) => {
-    stringSplit()
+    getCalibrationValues(stringSplit())
     event.preventDefault()
   }
 
