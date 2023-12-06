@@ -1,8 +1,23 @@
 import { useState } from 'react'
 import './App.css'
 
+
 function App() {
   const [inputData, setInputData] = useState('')
+  const [outputData, setOutputData] = useState('')
+
+  const numbersText = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ]
 
   const handleInputChange = (event) => {
     setInputData(event.target.value)
@@ -12,9 +27,14 @@ function App() {
     const stringSplit = inputData.split('\n')
     return stringSplit
   }
-
-  const arraySum = (array) => {
-    
+  
+  const convertToNumber = () => {
+    const stringToConvert = 'zerotestoneahoj'
+    const stringConverted = numbersText
+      .reduce((stringConverted, number, index) => {
+      return stringToConvert.replace(number, index)
+    }, stringToConvert)
+    console.log(stringConverted)
   }
 
   const getCalibrationValues = (stringArray) => {
@@ -37,16 +57,18 @@ function App() {
         }
       }
       console.log('number:', number)
-      if( number !== '' ) calibrationValues.push(number)
+      if( number !== '' ) calibrationValues.push(+number)
       console.log('---')
     })
     console.log('calibrationValues', calibrationValues)
-
-    calibrationValues.reduce()
+    return calibrationValues 
   }
   
   const getCalibrationValueSum = (event) => {
-    getCalibrationValues(stringSplit())
+    setOutputData(
+      getCalibrationValues(stringSplit())
+        .reduce((total, num) => total + num, 0)
+    )
     event.preventDefault()
   }
 
@@ -58,7 +80,7 @@ function App() {
           <textarea id='dataIn' name='dataIn' rows='10' cols='50' onChange={handleInputChange} value={inputData} /><br/><br/>
           <button onClick={getCalibrationValueSum} >Submit</button><br/><br/>
           <label htmlFor='dataOut' >Output</label><br/>
-          <input type='text' id='dataOut' name='dataOut' /><br/>
+          <input type='text' id='dataOut' name='dataOut' value={outputData} disabled /><br/>
         </form>
       </div>
     </>
