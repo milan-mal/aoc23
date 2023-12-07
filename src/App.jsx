@@ -6,19 +6,6 @@ function App() {
   const [inputData, setInputData] = useState('')
   const [outputData, setOutputData] = useState('')
 
-  const numbersText = [
-    'zero',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-  ]
-
   const handleInputChange = (event) => {
     setInputData(event.target.value)
   }
@@ -28,13 +15,26 @@ function App() {
     return stringSplit
   }
   
-  const convertToNumber = () => {
-    const stringToConvert = 'zerotestoneahoj'
-    const stringConverted = numbersText
-      .reduce((stringConverted, number, index) => {
-      return stringToConvert.replace(number, index)
-    }, stringToConvert)
-    console.log(stringConverted)
+  const convertToNumber = (stringToConvert) => {
+    const numbersText = [
+      'zero',
+      'one',
+      'two',
+      'three',
+      'four',
+      'five',
+      'six',
+      'seven',
+      'eight',
+      'nine',
+    ]
+    
+    let stringConverted = stringToConvert
+    numbersText.forEach((numberText, index) => {
+      stringConverted = stringConverted.replace(numberText, index)
+    })
+
+    return stringConverted
   }
 
   const getCalibrationValues = (stringArray) => {
@@ -56,19 +56,17 @@ function App() {
           }
         }
       }
-      console.log('number:', number)
       if( number !== '' ) calibrationValues.push(+number)
-      console.log('---')
     })
     console.log('calibrationValues', calibrationValues)
-    return calibrationValues 
+    return calibrationValues
   }
   
   const getCalibrationValueSum = (event) => {
-    setOutputData(
-      getCalibrationValues(stringSplit())
+    const calibrationValueSum = getCalibrationValues(stringSplit())
         .reduce((total, num) => total + num, 0)
-    )
+    console.log(calibrationValueSum)
+    setOutputData(calibrationValueSum)
     event.preventDefault()
   }
 
