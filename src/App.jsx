@@ -10,8 +10,8 @@ function App() {
     setInputData(event.target.value)
   }
   
-  const stringSplit = () => {
-    const stringSplit = inputData.split('\n')
+  const stringSplit = (stringToSplit) => {
+    const stringSplit = stringToSplit.split('\n')
     return stringSplit
   }
   
@@ -31,9 +31,8 @@ function App() {
     
     let stringConverted = stringToConvert
     numbersText.forEach((numberText, index) => {
-      stringConverted = stringConverted.replace(numberText, index)
+      stringConverted = stringConverted.replaceAll(numberText, `${numberText}${index}${numberText}`)
     })
-
     return stringConverted
   }
 
@@ -63,10 +62,14 @@ function App() {
   }
   
   const getCalibrationValueSum = (event) => {
-    const calibrationValueSum = getCalibrationValues(stringSplit())
-        .reduce((total, num) => total + num, 0)
+    const calibrationValueSum = getCalibrationValues(
+      stringSplit(
+        convertToNumber(inputData)
+      )
+    ).reduce((total, num) => total + num, 0)
     console.log(calibrationValueSum)
     setOutputData(calibrationValueSum)
+
     event.preventDefault()
   }
 
