@@ -19,15 +19,17 @@ function Day02() {
     const inputArray = stringSplit(inputData)
 
     let gameSum = 0
+    let totalPower = 0
     
     inputArray.forEach(element => {
       const game = element.slice(element.search(':') + 2)
         .split(/,|;/)
-        .map(x => x.trim().split(' ').reverse())
+        .map(x => x.trim().split(' ').reverse())  // reverse can be removed (impacts for loop)
       const gameId = + (element.slice(element.search(' '), element.search(':')))
 
       console.log('Game', Number(gameId), game)
 
+      // Part One
       const redLimit = 12
       const greenLimit = 13
       const blueLimit = 14
@@ -49,8 +51,31 @@ function Day02() {
       }
       console.log('Game possible:', Number(gameId), gamePossible)
       if( gamePossible ) gameSum += gameId
-      console.log('gameSum:', gameSum)
+
+
+      // Part Two
+      var redMax = 0
+      var greenMax = 0
+      var blueMax = 0
+      for( let i = 0; i < game.length; i++){
+        if( game[i][0] === 'red' && +game[i][1] > redMax ){
+          redMax = +game[i][1]
+        }
+        if( game[i][0] === 'green' && +game[i][1] > greenMax ){
+          greenMax = +game[i][1]
+        }
+        if( game[i][0] === 'blue' && +game[i][1] > blueMax ){
+          blueMax = +game[i][1]
+        }
+      }
+      const gamePower = redMax * greenMax * blueMax
+      console.log('gamePower:', gamePower)
+      totalPower += gamePower
+
     })
+
+    console.log('gameSum:', gameSum)
+    console.log('totalPower:', totalPower)
 
     setOutputData(gameSum)
 
